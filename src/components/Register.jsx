@@ -17,6 +17,8 @@ export default function Register({ setUser }) {
     if (data.get("password") === passwordConfirmationRef.current.value) {
       fetch(import.meta.env.VITE_AUTH_API, {
         method: "POST",
+        mode: "cors",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -26,7 +28,6 @@ export default function Register({ setUser }) {
         .then((data) => {
           if (data.success) {
             setUser(data.data);
-            localStorage.setItem("user-jwt", JSON.stringify(data.jwt));
             navigate(`/my-feed`);
           } else {
             console.log(data)

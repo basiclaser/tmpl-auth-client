@@ -26,7 +26,6 @@ export default function Login({ setUser }) {
       .then((data) => {
         if (data.success) {
           setUser(data.data);
-          localStorage.setItem("user-jwt", JSON.stringify(data.jwt));
           navigate(`/my-feed`);
         } else {
           alert(data.message);

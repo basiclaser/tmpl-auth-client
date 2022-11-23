@@ -8,13 +8,11 @@ import LoggedInArea from "./components/LoggedInArea.jsx";
 import Header from "./Header.jsx";
 function App() {
   const [user, setUser] = useState(null);
+
   useEffect(() => {
-    const jwt = localStorage["user-jwt"];
-    if (jwt) {
-      fetch(`${import.meta.env.VITE_AUTH_API}/me`, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(jwt)}`,
-        },
+      fetch(`${import.meta.env.VITE_AUTH_API}/me`,{
+        mode: "cors",
+        credentials: "include"
       })
         .then((res) => res.json())
         .then((data) => {
@@ -27,12 +25,24 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-    }
   }, []);
+
   const handleLogout = () => {
-    localStorage.removeItem("user-jwt");
-    setTimeout(()=>window.location.reload(), 1)
+    fetch(`${import.meta.env.VITE_AUTH_API}/logout`,{
+      mode: "cors",
+      credentials: "include"
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        window.location.reload();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
+  
   return (
     <div className="App">
       <Header user={user} handleLogout={handleLogout}/>

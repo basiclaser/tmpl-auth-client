@@ -18,11 +18,11 @@ export default function MessageForm() {
       object[key] = value;
     });
 
-    const jwt = localStorage["user-jwt"];
     fetch(import.meta.env.VITE_MSG_API, {
       method: "POST",
+      mode: "cors",
+      credentials: "include",
       headers: {
-        Authorization: `Bearer ${JSON.parse(jwt)}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(object),
