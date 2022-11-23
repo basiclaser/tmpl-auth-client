@@ -17,6 +17,8 @@ export default function Login({ setUser }) {
     console.log(import.meta.env)
     fetch(import.meta.env.VITE_AUTH_API+"/login", {
       method: "POST",
+      mode: "cors",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
